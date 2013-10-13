@@ -4,16 +4,18 @@ import re
 import dateutil.parser
 import json
 
-re_title = re.compile(r"(.*) - ([a-z]{1,2}4[a-z]{1,2})( - ([0-9]{1,2}))? \((.*)\)")
+re_title = re.compile(r"(.*) - ([a-z]{1,2}4[a-z]{1,2})( - ([0-9]{1,2}))?( \((.*)\))?")
 
 def parse_title(soup):
   raw_title = soup.find("h2", {'class': 'postingtitle'}).text.strip()
   m = re_title.search(raw_title)  
   title = m.group(1) if m else None
   orientation = m.group(2) if m else None
-  age = m.group(4) if m else None
-  locale = m.group(5) if m else None
-  return raw_title, title, orientation, age, locale
+  gender = orientation.split("4")[0]
+  target = orientation.split("4")[1]
+  age = int(m.group(4)) if m else None
+  locale = m.group(6) if m else None
+  return raw_title, title, orientation, age, locale, gender, target
 
 def parse_email(soup):
   return soup.find("section", {"class":"dateReplyBar"}).a.attrs['href'][7:]
@@ -33,7 +35,7 @@ def scrape_page(url, city):
 
     # parse date and title first
     dt = parse_date(soup)
-    raw_title, title, orientation, age, locale = parse_title(soup)
+    raw_title, title, orientation, age, locale, gender, target = parse_title(soup)
 
     output = dict(
       url = url,
@@ -41,6 +43,8 @@ def scrape_page(url, city):
       raw_title = raw_title,
       title = title,
       orientation = orientation,
+      gender = gender,
+      target = target,
       age = age,
       locale = locale,
       email = parse_email(soup),
@@ -59,5 +63,6 @@ def scrape_page(url, city):
 
   else:
     return None
+
 if __name__ == '__main__':
   print scrape_page('http://newyork.craigslist.org/stn/mis/4126266055.html', 'newyork')
