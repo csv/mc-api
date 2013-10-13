@@ -18,7 +18,7 @@ def parse_orientation_match(m):
 def parse_title(soup):
   raw_title = soup.find("h2", {'class': 'postingtitle'}).text.strip()
   m = re_title.search(raw_title)  
-  title = m.group(1) if m else None
+  title = m.group(1).strip() if m else None
   orientation, gender, target = parse_orientation_match(m)
   age = int(m.group(4)) if m and m.group(4) else None
   location = m.group(6) if m else None
