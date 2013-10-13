@@ -35,6 +35,9 @@ if __name__ == '__main__':
   red = redis.StrictRedis(host='localhost', port=6379, db=0)
   df = pd.read_csv('all_rss_feeds.csv')
   cities = [c for c in df.city]
-  rss = [r for r in df.rss]
-  items = zip(cities, rss)
+  feeds = [r for r in df.rss]
+  items = zip(cities, feeds)
   threaded(items, crawl, num_threads=100, max_queue=2000)
+  # # debug mode #
+  # for item in items:
+  #   crawl(item)

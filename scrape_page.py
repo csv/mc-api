@@ -6,16 +6,23 @@ import json
 
 re_title = re.compile(r"(.*) - ([a-z]{1,2}4[a-z]{1,2})( - ([0-9]{1,2}))?( \((.*)\))?")
 
+def parse_orientation_match(m):
+  if m and m.group(2):
+    orientation = m.group(2)
+    gender = orientation.split("4")[0]
+    target = orientation.split("4")[1]
+    return orientation, gender, target
+  else:
+    return None, None, None
+
 def parse_title(soup):
   raw_title = soup.find("h2", {'class': 'postingtitle'}).text.strip()
   m = re_title.search(raw_title)  
   title = m.group(1) if m else None
-  orientation = m.group(2) if m else None
-  gender = orientation.split("4")[0]
-  target = orientation.split("4")[1]
-  age = int(m.group(4)) if m else None
-  locale = m.group(6) if m else None
-  return raw_title, title, orientation, age, locale, gender, target
+  orientation, gender, target = parse_orientation_match(m)
+  age = int(m.group(4)) if m and m.group(4) else None
+  location = m.group(6) if m else None
+  return raw_title, title, orientation, age, location, gender, target
 
 def parse_email(soup):
   return soup.find("section", {"class":"dateReplyBar"}).a.attrs['href'][7:]
@@ -35,7 +42,7 @@ def scrape_page(url, city):
 
     # parse date and title first
     dt = parse_date(soup)
-    raw_title, title, orientation, age, locale, gender, target = parse_title(soup)
+    raw_title, title, orientation, age, location, gender, target = parse_title(soup)
 
     output = dict(
       url = url,
@@ -46,7 +53,7 @@ def scrape_page(url, city):
       gender = gender,
       target = target,
       age = age,
-      locale = locale,
+      location = location,
       email = parse_email(soup),
       body = parse_body(soup),
       timestamp = int(dt.strftime("%s")),
@@ -65,4 +72,4 @@ def scrape_page(url, city):
     return None
 
 if __name__ == '__main__':
-  print scrape_page('http://newyork.craigslist.org/stn/mis/4126266055.html', 'newyork')
+  print scrape_page('http://fortsmith.craigslist.org/mis/4035763349.html', 'fortsmith')
