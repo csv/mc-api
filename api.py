@@ -11,7 +11,7 @@ red = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 # args for orientation=all
 sexes = [
-  "m", "w", "mm", "ww", "wm", "mw"
+  "t", "tt", "m", "w", "mm", "ww", "wm", "mw"
 ]
 orientations = ["%s4%s" %(s1, s2) for s1 in sexes for s2 in sexes] + ['None']
 
