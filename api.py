@@ -57,8 +57,9 @@ def query():
       min = start, 
       max = end
     )
-
-  return json.dumps([json.loads(r) for r in results])
+    
+  # turn it into a json list
+  return "[%s]" % ",".join(results)
 
 if __name__ == "__main__":
   app.debug = True
