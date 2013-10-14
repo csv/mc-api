@@ -10,7 +10,8 @@ are lists of json blobs, with each blob corresponding to a missed connection.
 
 ## How do I I query the database?
 Yes, you may be thinking this:
-![img](https://pbs.twimg.com/media/BOIlOviCEAEZXTj.png:small)
+<br></br>
+![img](https://pbs.twimg.com/media/BOIlOviCEAEZXTj.png:medium)
 
 But `mc-api` is pretty easy to query.  the url format is this
 ```
