@@ -30,7 +30,9 @@ You can also retrieve a random missed connection at:
 
 ## LIST OF CITIES AND RSS FEEDS ##
 You can also find a csv of these [here](https://github.com/csv/mc-api/blob/master/crawler/feeds/all_rss_feeds.csv)
+
 ----------------------------------------------------
+
 [auburn](http://auburn.craigslist.org/mis/index.rss) <br/>
 [birmingham](http://bham.craigslist.org/mis/index.rss) <br/>
 [dothan](http://dothan.craigslist.org/mis/index.rss) <br/>
