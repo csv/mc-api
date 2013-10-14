@@ -27,7 +27,7 @@ def crawl(item):
 
           # scrape post
           key, rank, value = scrape_page(url, city)
-
+          print "adding data from %s to %s" % (url, key)
           # add post data to redis
           red.zadd(key, rank, value)
 
