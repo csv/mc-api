@@ -23,6 +23,11 @@ For example:
 ```
 if we specify `orientation=all` we will return all missed connections in a given city
 
+You can also retrieve a random missed connection at:
+```
+/random
+```
+
 ## LIST OF CITIES AND RSS FEEDS ##
 You can also find a csv of these [here](https://github.com/csv/mc-api/blob/master/crawler/feeds/all_rss_feeds.csv)
 ----------------------------------------------------
