@@ -39,7 +39,8 @@ def parse_title(soup):
   return raw_title, title, orientation, age, location, gender, target
 
 def parse_email(soup):
-  return soup.find("section", {"class":"dateReplyBar"}).a.attrs['href'][7:]
+  raw_email = soup.find("section", {"class":"dateReplyBar"}).a.attrs['href'][7:]
+  return raw_email.split('?')[0]
 
 def parse_body(soup):
   return soup.find("section", {"id":"postingbody"}).text.strip()
@@ -56,8 +57,10 @@ def scrape_page(url, city):
 
     # parse date and title first
     dt = parse_date(soup)
-    raw_title, title, orientation, age, location, gender, target = parse_title(soup)
     ts = int(dt.strftime("%s"))
+    raw_title, title, orientation, age, location, gender, target = \
+     parse_title(soup)
+    
     output = dict(
       url = url,
       city = city,
