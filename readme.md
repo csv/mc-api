@@ -17,16 +17,16 @@ But `mc-api` is pretty easy to query.  the url format is this
 ```
 /?city=<city>&orientation=<orientation>&start=<start_ts>&end=<end_ts>
 ```
-For example: 
-```
-/?city=orange-county&orientation=m4w&start=0&end=10000000000
-```
+For example:
+<br/>
+[http://54.205.111.185:5000/?city=orange-county&orientation=m4w&start=0&end=10000000000](http://54.205.111.185:5000/?city=orange-county&orientation=m4w&start=0&end=10000000000)
+
 if we specify `orientation=all` we will return all missed connections in a given city
 
 You can also retrieve a random missed connection at:
-```
-/random
-```
+<br/>
+[http://54.205.111.185:5000/random](http://54.205.111.185:5000/random)
+
 
 ## LIST OF CITIES AND RSS FEEDS ##
 You can also find a csv of these [here](https://github.com/csv/mc-api/blob/master/crawler/feeds/all_rss_feeds.csv)
