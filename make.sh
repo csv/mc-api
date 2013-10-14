@@ -8,3 +8,6 @@ cd mc-api
 sudo pip install -r requirements.pip
 cd ec2-utils
 sh install_crontab.sh
+cd ../
+python api.py &
+
