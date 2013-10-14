@@ -42,4 +42,4 @@ chkconfig --level 345 redis-server on
 ####
 # To start Redis just uncomment this line
 ####
-#service redis-server start
+service redis-server start
