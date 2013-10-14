@@ -57,10 +57,9 @@ def query():
       min = start, 
       max = end
     )
-    
+
   # turn it into a json list
   return "[%s]" % ",".join(results)
 
 if __name__ == "__main__":
-  app.debug = True
-  app.run(host='0.0.0.0', port=8000)
+  app.run(host='0.0.0.0', port=5000)
