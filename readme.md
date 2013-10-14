@@ -8,7 +8,7 @@ to keep the api as simple as possible, the keys are unique combinations
 of city and sexual orientation (m4w, w4m, m4m, m4w, etc), and the values
 are lists of json blobs, with each blob corresponding to a missed connection. 
 
-## How do I I query the database?
+## How do I query the database?
 Yes, you may be thinking this:
 <br></br>
 ![img](https://pbs.twimg.com/media/BOIlOviCEAEZXTj.png:medium)
