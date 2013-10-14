@@ -8,18 +8,19 @@ to keep the api as simple as possible, our keys are unique combinations
 of city and sexual orientation (m4w, w4m, m4m, m4w, etc), and are values
 are lists of json blobs, with each blob corresponding to a missed connection. 
 
-## how to query the database?
+## How do I I query the database?
 Yes, you may be thinking this:
 ![img](https://pbs.twimg.com/media/BOIlOviCEAEZXTj.png:small)
 
 But `mc-api` is pretty easy to query.  the url format is this
 ```
-/?key=<city>:>orientation&start=<start_ts>&end=<end_ts>
+/?city=<city>&orientation=<orientation>&start=<start_ts>&end=<end_ts>
 ```
 For example: 
 ```
-/?key=orange-county:m4w&start=0&end=10000000000
+/?city=orange-county&orientation=m4w&start=0&end=10000000000
 ```
+if we specify `orientation=all` we will return all missed connections in a given city
 
 ## LIST OF CITIES AND RSS FEEDS ##
 ```
