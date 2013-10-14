@@ -4,8 +4,8 @@ a crawler, redis store, and flask api for missed connections
 
 ## About the Database
 `redis` is not a typical database, it's a key/value store.
-to keep the api as simple as possible, our keys are unique combinations 
-of city and sexual orientation (m4w, w4m, m4m, m4w, etc), and are values
+to keep the api as simple as possible, the keys are unique combinations 
+of city and sexual orientation (m4w, w4m, m4m, m4w, etc), and the values
 are lists of json blobs, with each blob corresponding to a missed connection. 
 
 ## How do I I query the database?
