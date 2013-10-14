@@ -1,5 +1,4 @@
 import redis
-import pandas as pd 
 import requests
 import xml.etree.ElementTree as ET
 import re
@@ -20,24 +19,27 @@ def crawl(item):
         
         # now check if url is already in database
         if not red.sismember('urls', url):
-          print "adding %s..." % url
-
-          # add url to urls list
-          red.sadd('urls', url) 
+          red.sadd('urls', url)
 
           # scrape post
-          post_data = scrape_page(url, city)
+          key, rank, value = scrape_page(url, city)
 
           # add post data to redis
-          red.sadd('posts', post_data)
+          red.zadd(key, rank, value)
 
 if __name__ == '__main__':
   red = redis.StrictRedis(host='localhost', port=6379, db=0)
-  df = pd.read_csv('all_rss_feeds.csv')
-  cities = [c for c in df.city]
-  feeds = [r for r in df.rss]
+  cities = []
+  feeds = []
+  for line in open('all_rss_feeds.csv').read().split('\r')[1:]:
+    row = line.split(",")
+    feeds.append(row[0].strip())
+    cities.append(row[2].strip())
   items = zip(cities, feeds)
-  threaded(items, crawl, num_threads=100, max_queue=2000)
-  # # debug mode #
-  # for item in items:
-  #   crawl(item)
+  for i in items:
+    print i[0], " - ", i[1]
+  # go forth young scraper
+  # threaded(items, crawl, num_threads=100, max_queue=2000)
+  # # # debug mode #
+  # [crawl(i) for i in items]
+
