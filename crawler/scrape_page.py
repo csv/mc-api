@@ -3,7 +3,6 @@ import requests
 import re
 import dateutil.parser
 import json
-import string
 
 re_title = re.compile(r"(.*) - ([a-z]{1,2}4[a-z]{1,2})( - ([0-9]{1,2}))?( \((.*)\))?")
 re_id = re.compile(r'(.*)/([0-9]+)\.html')
@@ -18,11 +17,8 @@ def parse_orientation_match(m):
     return None, None, None
 
 def parse_city_to_slug(city):
-  # remove slashes
   city = re.sub('/', ' ', city)
-  # remove periods
-  city = re.sub('\\.', ' ', city)
-  # convert spaces to dashes
+  city = re.sub('\\.', ' ', city).strip()
   return re.sub('\s+', '-', city).lower().strip()
 
 def gen_redis_key(o):

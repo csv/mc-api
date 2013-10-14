@@ -17,11 +17,8 @@ orientations = ["%s4%s" %(s1, s2) for s1 in sexes for s2 in sexes] + ['None']
 
 # slugify city arg:
 def parse_city_to_slug(city):
-  # remove slashes
   city = re.sub('/', ' ', city)
-  # remove periods
-  city = re.sub('\\.', ' ', city)
-  # convert spaces to dashes
+  city = re.sub('\\.', ' ', city).strip()
   return re.sub('\s+', '-', city).lower().strip()
 
 @app.route('/random')
