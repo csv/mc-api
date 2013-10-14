@@ -24,13 +24,12 @@ def parse_city_to_slug(city):
 @app.route('/random')
 def random():
   key = red.randomkey()
-  print key
   results = red.zrangebyscore(
           key, 
           min = 0, 
           max = 1e11
         )
-  return results[0]
+  return choice(results)
 
 @app.route("/")
 def query():
