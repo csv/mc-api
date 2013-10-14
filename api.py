@@ -14,15 +14,20 @@ sexes = [
 ]
 orientations = ["%s4%s" %(s1, s2) for s1 in sexes for s2 in sexes] + ['None']
 
-@app.route("/random")
-def random():
-  return r.srandmember()
+# slugify city arg:
+def parse_city_to_slug(city):
+  # remove slashes
+  city = re.sub('/', ' ', city)
+  # remove periods
+  city = re.sub('\\.', ' ', city)
+  # convert spaces to dashes
+  return re.sub('\s+', '-', city).lower().strip()
 
 @app.route("/")
-def dump_key():
+def query():
 
   # parse args
-  city = request.args.get('city', None)
+  city = parse_city_to_slug(request.args.get('city', 'new york city'))
   orientation = request.args.get('orientation', 'all')
   start = request.args.get('start', 0)
   end = request.args.get('end', 1e11)
