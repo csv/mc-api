@@ -64,7 +64,7 @@ def scrape_page(url, city):
     output = dict(
       url = url,
       city = city,
-      slug = parse_city_to_slug(city),
+      city_slug = parse_city_to_slug(city),
       raw_title = raw_title,
       title = title,
       orientation = orientation,

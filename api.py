@@ -4,6 +4,7 @@ import json
 from flask import request
 import dateutil.parser
 import re
+from random import choice
 
 app = flask.Flask(__name__)
 red = redis.StrictRedis(host='localhost', port=6379, db=0)
@@ -23,9 +24,19 @@ def parse_city_to_slug(city):
   # convert spaces to dashes
   return re.sub('\s+', '-', city).lower().strip()
 
+@app.route('/random')
+def random():
+  key = red.randomkey()
+  print key
+  results = red.zrangebyscore(
+          key, 
+          min = 0, 
+          max = 1e11
+        )
+  return results[0]
+
 @app.route("/")
 def query():
-
   # parse args
   city = parse_city_to_slug(request.args.get('city', 'new york city'))
   orientation = request.args.get('orientation', 'all')
