@@ -46,6 +46,16 @@ def parse_date(soup):
   date_string = [r.find('date').text for r in results if r.find('date')][0]
   return dateutil.parser.parse(date_string)
 
+def parse_images(soup):
+  divs = soup.find("div", {"id":"ci"})
+  if divs:
+    img_links = [i.attrs['src'] for i in divs.findAll('img')]
+    n_imgs = len(img_links)
+  else:
+    n_imgs = 0
+    img_links = []
+  return n_imgs, img_links
+
 def scrape_page(url, city):
   r = requests.get(url)
   if r.status_code == 200:
@@ -56,6 +66,8 @@ def scrape_page(url, city):
     ts = int(dt.strftime("%s"))
     raw_title, title, orientation, age, location, gender, target = \
      parse_title(soup)
+    
+    n_imgs, img_links = parse_images(soup)
     
     output = dict(
       url = url,
@@ -77,7 +89,9 @@ def scrape_page(url, city):
       day = dt.day,
       hour = dt.hour,
       min = dt.minute,
-      weekday = dt.weekday()
+      weekday = dt.weekday(),
+      n_imgs = n_imgs,
+      img_links = img_links
     )
 
     key = gen_redis_key(output)
@@ -89,4 +103,4 @@ def scrape_page(url, city):
     return None
 
 if __name__ == '__main__':
-  print scrape_page('http://fortsmith.craigslist.org/mis/4035763349.html', 'fortsmith')
+  print scrape_page('http://davaocity.tl.craigslist.com.ph/mis/4100781873.html', 'fortsmith')
