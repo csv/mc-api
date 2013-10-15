@@ -43,7 +43,14 @@ def parse_body(soup):
 
 def parse_date(soup):
   results = soup.findAll("p", {"class":"postinginfo"})
-  date_string = [r.find('date').text for r in results if r.find('date')][0]
+  date_string = [r.find('date').text for r in results if r.find('date')][0].strip()
+  
+  # reformat datestring, strip time zone
+  date_string = re.sub(',', '', date_string)
+  date_string = re.sub('\s+', ' ', date_string)
+  date_string = ' '.join(date_string.split()[0:2])
+  
+  # return 
   return dateutil.parser.parse(date_string)
 
 def parse_images(soup):
@@ -103,4 +110,4 @@ def scrape_page(url, city):
     return None
 
 if __name__ == '__main__':
-  print scrape_page('http://seattle.craigslist.org/see/mis/4130125474.html', 'fortsmith')
+  print scrape_page('http://micronesia.craigslist.org/mis/4052867600.html', 'fortsmith')
