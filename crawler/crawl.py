@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 import re
 from thready import threaded
 from scrape_page import scrape_page
+from datetime import datetime
 
 # initialize redis
 red = redis.StrictRedis(host='localhost', port=6379, db=0)
@@ -26,8 +27,9 @@ def crawl(item):
           red.sadd('urls', url)
 
           # scrape post
+          now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+          print "scraping data from %s to %s @ %s" % (url, key, now)
           key, rank, value = scrape_page(url, city)
-          print "adding data from %s to %s" % (url, key)
           # add post data to redis
           red.zadd(key, rank, value)
 

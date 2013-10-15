@@ -103,4 +103,4 @@ def scrape_page(url, city):
     return None
 
 if __name__ == '__main__':
-  print scrape_page('http://davaocity.tl.craigslist.com.ph/mis/4100781873.html', 'fortsmith')
+  print scrape_page('http://seattle.craigslist.org/see/mis/4130125474.html', 'fortsmith')
