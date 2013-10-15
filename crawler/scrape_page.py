@@ -43,11 +43,11 @@ def parse_body(soup):
 
 def parse_date(soup):
   results = soup.findAll("p", {"class":"postinginfo"})
-  date_string = [r.find('date').text for r in results if r.find('date')][0].strip()
+  date_string = [r.find('date').text for r in results if r.find('date')][0]
   
   # reformat datestring, strip time zone
   date_string = re.sub(',', '', date_string)
-  date_string = re.sub('\s+', ' ', date_string)
+  date_string = re.sub('\s+', ' ', date_string).strip()
   date_string = ' '.join(date_string.split()[0:2])
   
   # return 

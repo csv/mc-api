@@ -3,7 +3,7 @@ import requests
 import xml.etree.ElementTree as ET
 import re
 from thready import threaded
-from scrape_page import scrape_page
+from scrape_page import scrape_page, parse_city_to_slug
 from datetime import datetime
 
 # initialize redis
@@ -41,7 +41,7 @@ if __name__ == '__main__':
   for line in open('feeds/all_rss_feeds.csv').read().split('\r')[1:]:
     row = line.split(",")
     feeds.append(row[0].strip())
-    cities.append(row[2].strip())
+    cities.append(parse_city_to_slug(row[2].strip()))
   items = zip(cities, feeds)
 
   # go forth young scraper
@@ -49,4 +49,8 @@ if __name__ == '__main__':
 
   # # # debug mode #
   # [crawl(i) for i in items]
+
+  # print md for readme
+  # for i in items:
+  #   print "[%s](%s)<br/>" % i
 
