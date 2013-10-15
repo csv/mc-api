@@ -42,6 +42,7 @@ You can also retrieve a random missed connection at:
 #### `orientation`:
 possible_values:
 ```
+None
 t4t
 t4tt
 t4m
