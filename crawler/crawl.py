@@ -28,7 +28,7 @@ def crawl(item):
 
           # scrape post
           now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-          print "scraping data from %s to %s @ %s" % (url, key, now)
+          print "scraping data from %s @ %s" % (url, now)
           key, rank, value = scrape_page(url, city)
           # add post data to redis
           red.zadd(key, rank, value)
