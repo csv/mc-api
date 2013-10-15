@@ -54,9 +54,9 @@ def parse_date(soup):
   return dateutil.parser.parse(date_string)
 
 def parse_images(soup):
-  divs = soup.find("div", {"id":"ci"})
-  if divs:
-    img_links = [i.attrs['src'] for i in divs.findAll('img')]
+  img_div = soup.find("div", {"id":"thumbs"})
+  if img_div:
+    img_links = [a.attrs['href'] for a in img_div.findAll('a')]
     n_imgs = len(img_links)
   else:
     n_imgs = 0
@@ -110,4 +110,4 @@ def scrape_page(url, city):
     return None
 
 if __name__ == '__main__':
-  print scrape_page('http://micronesia.craigslist.org/mis/4052867600.html', 'fortsmith')
+  print scrape_page('http://tijuana.es.craigslist.com.mx/mis/4130179087.html', 'tijuana')
