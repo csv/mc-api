@@ -38,7 +38,7 @@ def parse_email(soup):
   raw_email = soup.find("section", {"class":"dateReplyBar"}).a.attrs['href'][7:]
   return raw_email.split('?')[0]
 
-def parse_body(soup):
+def parse_body(soup): 
   return soup.find("section", {"id":"postingbody"}).text.strip()
 
 def parse_date(soup):
