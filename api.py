@@ -38,7 +38,7 @@ def query():
   orientation = request.args.get('orientation', 'all')
   start = request.args.get('start', 0)
   end = request.args.get('end', 1e11)
-  order = request.args.get('order', 'descending')
+  order = request.args.get('order', 'desc')
   
   if orientation=="all":
     results = []
@@ -59,7 +59,7 @@ def query():
       max = end
     )
 
-  if order=='ascending':
+  if order=='desc':
     results = reverse(results)
 
   # turn it into a json list
