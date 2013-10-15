@@ -60,10 +60,11 @@ def query():
     )
 
   if order=='desc':
-    results = reverse(results)
+    results = [r for r in reversed(results)]
 
   # turn it into a json list
   return "[%s]" % ",".join(results)
 
 if __name__ == "__main__":
+  app.debug = True
   app.run(host='0.0.0.0', port=5000)
