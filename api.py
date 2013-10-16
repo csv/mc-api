@@ -8,7 +8,7 @@ import StringIO
 import csv
 
 app = flask.Flask(__name__)
-db = dataset.connect('sqlite:///test.db')
+db = dataset.connect('postgresql://brian:Pat93Sob@localhost:5432/mc')
 
 
 @app.route("/")

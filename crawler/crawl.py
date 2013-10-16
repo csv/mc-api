@@ -6,8 +6,8 @@ from thready import threaded
 from scrape_page import scrape_page, parse_city_to_slug
 from datetime import datetime
 
-# initialize redis
-db = dataset.connect('sqlite:///../test.db')
+# initialize postgres database
+db = dataset.connect('postgresql://brian:Pat93Sob@localhost:5432/mc')
 data = db['mc']
 urls = db['urls']
 urls.insert({'url': None})
