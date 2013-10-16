@@ -3,3 +3,4 @@ redis
 beautifulsoup4
 requests
 git+git://github.com/pudo/thready.git
+git+git://github.com/AlchemyAPI/alchemyapi_python.git

@@ -1,4 +1,4 @@
-import redis
+import dataset
 import requests
 import xml.etree.ElementTree as ET
 import re
@@ -7,7 +7,11 @@ from scrape_page import scrape_page, parse_city_to_slug
 from datetime import datetime
 
 # initialize redis
-red = redis.StrictRedis(host='localhost', port=6379, db=0)
+db = dataset.connect('sqlite:///../test.db')
+data = db['mc']
+urls = db['urls']
+urls.insert({'url': None})
+crawled_urls = frozenset([r['url'] for r in db.query('SELECT url from urls')])
 
 # crawl a single feed
 def crawl(item):
@@ -23,15 +27,18 @@ def crawl(item):
       if re.search('[0-9]\\.html', url):
         
         # now check if url is already in database
-        if not red.sismember('urls', url):
-          red.sadd('urls', url)
+        if url not in crawled_urls:
+          
+          # insert new urls
+          urls.insert({'url':url})
 
           # scrape post
-          now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-          print "scraping data from %s @ %s" % (url, now)
-          key, rank, value = scrape_page(url, city)
-          # add post data to redis
-          red.zadd(key, rank, value)
+          print "scraping data from %s @ %s" % (url, datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+          page_data = scrape_page(url, city)
+          
+          # add post data to database
+          data.insert(page_data)
+          
 
 if __name__ == '__main__':
 
@@ -46,9 +53,6 @@ if __name__ == '__main__':
 
   # go forth young scraper
   threaded(items, crawl, num_threads=10, max_queue=200)
-
-  # # # debug mode #
-  # [crawl(i) for i in items]
 
   # print md for readme
   # for i in items:

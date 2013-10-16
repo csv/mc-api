@@ -17,13 +17,9 @@ def parse_orientation_match(m):
     return None, None, None
 
 def parse_city_to_slug(city):
-  city = re.sub('/', ' ', city)
-  city = re.sub('\\.', ' ', city).strip()
+  city = re.sub(r'/|"|\(|\)|\'', ' ', city)
+  city = re.sub('\\.', '', city).strip()
   return re.sub('\s+', '-', city).lower().strip()
-
-def gen_redis_key(o):
-  slug = parse_city_to_slug(o['city'])
-  return '%s:%s' % (slug, o['orientation'])
 
 def parse_title(soup):
   raw_title = soup.find("h2", {'class': 'postingtitle'}).text.strip()
@@ -70,13 +66,12 @@ def scrape_page(url, city):
 
     # parse date and title first
     dt = parse_date(soup)
-    ts = int(dt.strftime("%s"))
     raw_title, title, orientation, age, location, gender, target = \
-     parse_title(soup)
+      parse_title(soup)
     
     n_imgs, img_links = parse_images(soup)
     
-    output = dict(
+    return dict(
       url = url,
       city = city,
       city_slug = parse_city_to_slug(city),
@@ -89,7 +84,7 @@ def scrape_page(url, city):
       location = location,
       email = parse_email(soup),
       body = parse_body(soup),
-      timestamp = ts,
+      timestamp = int(dt.strftime('%s')),
       datetime = dt.strftime("%Y-%m-%d %H:%M:%S"),
       year = dt.year,
       month = dt.month,
@@ -98,13 +93,8 @@ def scrape_page(url, city):
       min = dt.minute,
       weekday = dt.weekday(),
       n_imgs = n_imgs,
-      img_links = img_links
+      img_links = "|".join(img_links) if len(img_links) > 0 else None
     )
-
-    key = gen_redis_key(output)
-    # print "adding %s to key:%s with ts:%s" % (url, key, ts)
-    
-    return key, ts, json.dumps(output)
 
   else:
     return None
