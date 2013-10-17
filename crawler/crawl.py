@@ -8,7 +8,7 @@ from scrape_page import scrape_page, parse_city_to_slug
 from datetime import datetime
 
 # initialize postgres database
-db = dataset.connect('postgresql://brian:Pat93Sob@localhost:5432/mc')
+db = dataset.connect('postgresql://brian:mc@localhost:5432/mc')
 data = db['mc']
 urls = db['urls']
 urls.insert({'url': None})
