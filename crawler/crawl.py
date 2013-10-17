@@ -1,4 +1,5 @@
 import dataset
+import random
 import requests
 import xml.etree.ElementTree as ET
 import re
@@ -36,7 +37,7 @@ def crawl(item):
           print "scraping data from %s @ %s" % (url, datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
           page_data = scrape_page(url, city)
           
-          # add post data to database
+          # add post data to safely database
           data.insert(page_data)
           
 
@@ -49,6 +50,8 @@ if __name__ == '__main__':
     row = line.split(",")
     feeds.append(row[0].strip())
     cities.append(parse_city_to_slug(row[2].strip()))
+
+  # randomly shuffle items to hit different rss feeds first
   items = zip(cities, feeds)
 
   # go forth young scraper
