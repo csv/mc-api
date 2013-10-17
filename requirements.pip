@@ -1,5 +1,5 @@
 flask
-redis
+dataset
 beautifulsoup4
 requests
 git+git://github.com/pudo/thready.git
