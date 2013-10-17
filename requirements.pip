@@ -2,5 +2,5 @@ flask
 redis
 beautifulsoup4
 requests
+psycopg2
 git+git://github.com/pudo/thready.git
-git+git://github.com/AlchemyAPI/alchemyapi_python.git
