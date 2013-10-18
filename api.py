@@ -10,7 +10,6 @@ import csv
 app = flask.Flask(__name__)
 db = dataset.connect('postgresql://brian:mc@localhost:5432/mc')
 
-
 @app.route("/")
 def query():
   # parse args  

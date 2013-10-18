@@ -10,9 +10,6 @@ from datetime import datetime
 # initialize postgres database
 db = dataset.connect('postgresql://brian:mc@localhost:5432/mc')
 data = db['mc']
-urls = db['urls']
-urls.insert({'url': None})
-crawled_urls = frozenset([r['url'] for r in db.query('SELECT url from urls')])
 
 # crawl a single feed
 def crawl(item):
@@ -26,19 +23,13 @@ def crawl(item):
 
       # check if url is legit
       if re.search('[0-9]\\.html', url):
-        
-        # now check if url is already in database
-        if url not in crawled_urls:
-          
-          # insert new urls
-          urls.insert({'url':url})
 
-          # scrape post
-          print "scraping data from %s @ %s" % (url, datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-          page_data = scrape_page(url, city)
-          
-          # add post data to safely database
-          data.insert(page_data)
+        # scrape post
+        print "scraping data from %s @ %s" % (url, datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        page_data = scrape_page(url, city)
+        
+        # add post data to safely database
+        data.upsert(page_data, "url")
           
 
 if __name__ == '__main__':
