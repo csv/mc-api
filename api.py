@@ -2,10 +2,6 @@ import flask
 from flask import request
 import json
 import dataset
-import dateutil.parser
-import re
-import StringIO
-import csv
 
 app = flask.Flask(__name__)
 db = dataset.connect('postgresql://brian:mc@localhost:5432/mc')
